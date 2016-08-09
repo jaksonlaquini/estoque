@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="LayoutPadrao">
+    
+<head>
+	<title>Pesquisa de Produtos</title>
+</head>
+
+<section layout:fragment="conteudo">
+	<div layout:include="MensagemGeral"></div>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<div class="clearfix">
+	   			<h1 class="panel-title aw-titulo-panel">Produtos</h1>
+	   			<a class="aw-link-panel btn btn-primary" style="height: 25px; width: 90px;" th:href="@{/produtos/novo}">
+	   				<span  class="glyphicon"></span> Novo
+	   			</a>
+	   		</div>
+	   	</div>
+	   	
+	   	<div class="panel-body">
+	   		<form method="GET" class="form-horizontal" th:action="@{/produtos}" th:object="${filtro}">
+	   			<div class="form-group">
+	   				<div class="col-sm-4">
+	   					<div class="input-group">
+	   						<input class="form-control" placeholder="Qual produto você está procurando?"
+	   							autofocus="autofocus" th:field="*{descricao}"></input>
+	   						<span class="input-group-btn">
+	   							<button type="submit" class="btn btn-default">
+	   								<i class="glyphicon glyphicon-search"></i>
+	   							</button>
+	   						</span>
+	   					</div>
+	   				</div>
+	   			</div>
+	   		</form>
+	   		
+	   		<div class="table-responsive">
+		   		<table class="table table-bordered table-striped">
+		   			<thead>
+		   				<tr>
+		   					<th class="text-center col-md-1">#</th>
+		   					<th>Decrição</th>
+		   					<th class="text-right col-md-2">Estoque</th>
+		   					<th class="col-md-1"></th>
+		   				</tr>
+		   			</thead>
+		   			<tbody>
+		   				<tr th:each="produto : ${produtos}">
+		   					<td class="text-center" th:text="${produto.codigo}">1</td>
+		   					<td th:text="${produto.descricao}"></td>
+		   					<td class="text-right" th:text="|${{produto.qtdEstoque}}|"></td>
+		   					<td class="text-center" style="width: 10%;">
+		   						<a class="btn btn-link btn-xs" th:href="@{/produtos/{codigo}(codigo=${produto.codigo})}" 
+		   								title="Editar" rel="tooltip" data-placement="top">
+		   							<span class="glyphicon glyphicon-pencil"></span>
+		   						</a>
+		   						
+		   						<a class="btn btn-link btn-xs" data-toggle="modal" data-target="#lancarEstoqueModal"
+		   								th:attr="data-codigo=${produto.codigo}, data-operacao= 1" 
+		   								title="Lançar Estoque" rel="tooltip" data-placement="top">
+		   							<span class="glyphicon glyphicon-plus-sign"></span>
+		   						</a>
+		   						
+		   						<a class="btn btn-link btn-xs" data-toggle="modal" data-target="#lancarEstoqueModal"
+		   							th:attr="data-codigo=${produto.codigo}, data-operacao= 2" 
+		   								title="Baixar Estoque" rel="tooltip" data-placement="top" style="size: 30px">
+		   							<span class="glyphicon glyphicon-minus-sign"></span>
+		   						</a>
+		   						<a class="btn btn-link btn-xs" data-toggle="modal" data-target="#confirmacaoExclusaoModal"
+		   								th:attr="data-codigo=${produto.codigo}, data-descricao=${produto.descricao}"
+		   								title="Excluir" rel="tooltip" data-placement="top">
+		   							<span class="glyphicon glyphicon-remove"></span>
+		   						</a>
+		   						
+		   					</td>
+		   				</tr>
+		   				<tr>
+		   					<td colspan="6" th:if="${#lists.isEmpty(produtos)}">Nenhum produto foi encontrado</td>
+		   				</tr>
+		   			</tbody>
+		   		</table>
+		   	</div>
+	   	</div>
+	   	
+	   	<div layout:include="DialogoConfirmacaoExclusao"></div>
+	   	<div layout:include="DialogoEntradaProdutoEstoque"></div>
+	   	
+	</div>
+</section>
+</html>

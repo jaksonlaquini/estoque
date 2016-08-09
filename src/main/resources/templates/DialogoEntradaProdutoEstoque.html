@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<div class="modal fade" id="lancarEstoqueModal" data-id="" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static"
+	aria-labelledby="exampleModalLabel">
+	<div class="modal-dialog" role="document">
+		<form  method="POST" name="lancarEstoque">
+		<input type="hidden" name="_method" value="PUT"/>
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="exampleModalLabel">Lançar Estoque</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="txtExemplo" class="control-label">Quantidade:</label>
+						<input type="text" class="form-control" id="txtExemplo"></input>
+						<input type="hidden" value="" id="idHidden"></input>
+						<input type="hidden" value="" id="operacao"></input>
+					</div>
+
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn" data-dismiss="modal">Cancelar</button>
+					<button type="submit" class="btn btn-primary btnSalvar" >Salvar</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+</html>
